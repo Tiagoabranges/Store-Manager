@@ -23,11 +23,13 @@ const createSale = async (data) => {
     return ({ id: newSale.insertId, itemsSold: data });
   };
 
-  const deleteSales = async (id) => {
-    await getSalesById(id);
-  
-    await sales.deleteSales(id);
-  };
+  const deleteSale = async (id) => {
+    const foundById = await sales.findOneById(id);
+    if (!foundById) {
+      return { status: 404, body: { message: 'Sale not found' } };
+    }
+    return { status: 204, body: await sales.removeSale(id) };
+   };
 
   const updateSale = async (id, item) => {
     const { productId, quantity } = item[0];
@@ -36,7 +38,7 @@ const createSale = async (data) => {
   };
 module.exports = {
     updateSale,
-    deleteSales,
+    deleteSale,
     createSale,
     getSales,
     getSalesById,
