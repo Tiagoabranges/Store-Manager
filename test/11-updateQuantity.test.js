@@ -27,7 +27,7 @@ describe("11-updateQuantity", () => {
   describe("11 - Atualize a quantidade de produtos", () => {
     let insertedId;
 
-    it.skip("Será validado que é possível atualizar a quantidade do produto ao fazer uma compra", async () => {
+    it("Será validado que é possível atualizar a quantidade do produto ao fazer uma compra", async () => {
       await frisby
         .post(`${url}/sales/`, [
           {
@@ -52,7 +52,7 @@ describe("11-updateQuantity", () => {
         });
     });
 
-    it.skip("Será validado que é possível atualizar a quantidade do produto ao deletar uma compra", async () => {
+    it("Será validado que é possível atualizar a quantidade do produto ao deletar uma compra", async () => {
       await frisby
         .delete(`${url}/sales/${insertedId}`)
         .expect("status", 204);
