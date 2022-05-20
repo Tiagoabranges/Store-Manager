@@ -1,5 +1,4 @@
 const express = require('express');
-const mysql = require('mysql2/promise');
 
 const app = express();
 
@@ -8,19 +7,13 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-const connection = mysql.createPool({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE || 'StoreManager',
-  port: process.env.MYSQL_PORT || '3306',
-});
+const products = require('./controllers/productsController');
+const sales = require('./controllers/saleController');
 
-app.get('/products', async (_res, res) => {
-  const result = await connection.execute('SELECT * FROM StoreManager.products;');
-  console.log(result);
-  res.status(200).send(result);
-});
+app.get('/products', products.getProducts);
+app.get('/products/:id', products.getProductsById);
+app.get('/sales', sales.getSales);
+app.get('/sales/:id', sales.getSalesById);
 
 // não remova essa exportação, é para o avaliador funcionar
 // você pode registrar suas rotas normalmente, como o exemplo acima
