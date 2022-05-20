@@ -51,16 +51,11 @@ const deleteSales = async (req, res, _next) => {
   }
 };
 
-const updateSale = async (req, res, next) => {
-  try {
-    const { id: saleId } = req.params;
-    const products = req.body;
-    const sale = await sales.updateSale(Number(saleId), products);
-
-    res.status(200).send(sale);
-  } catch (error) {
-    next(error);
-  }
+const updateSale = async (req, res) => {
+  const { id } = req.params;
+  const item = req.body;
+  const updatedProduct = await sales.update(id, item);
+  return res.status(201).json(updatedProduct);
 };
 module.exports = {
   updateSale,

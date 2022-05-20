@@ -29,32 +29,10 @@ const createSale = async (data) => {
     await sales.deleteSales(id);
   };
 
-  const validate = (productId, quantity) => {
-    if (!productId) return ({ code: 400, message: '"product" is required' });
-    if (quantity <= 0) {
-      return ({
-        code: 422,
-        message: '"quantity" must be greater than or equal to 1',
-      });
-    }
-    if (!quantity) return ({ code: 400, message: '"quantity" is required' });
-    return {};
-  };
-  const updateSale = async (saleId, products) => {
-    const { code, message } = products.map(({ productId, quantity }) =>
-      validate(productId, quantity));
-  
-    if (code) return (code, message);
-    await sales.remove(saleId);
-    await Promise.all(
-      products.map(({ productId, quantity }) =>
-        sales.create(saleId, productId, quantity)),
-    );
-  
-    return ({
-      saleId,
-      itemUpdated: products,
-    });
+  const updateSale = async (id, item) => {
+    const { productId, quantity } = item[0];
+    await sales.updateSales(id, productId, quantity);
+      return { saleId: id, itemUpdated: item };
   };
 module.exports = {
     updateSale,
