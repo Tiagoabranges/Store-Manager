@@ -1,6 +1,6 @@
 const connection = require('./connection');
 
-const getProducts = async () => {
+const getProducts = async () => { // conectando com o bd para trazer a lista dos produtos req 2
   const [arrayProducts] = await connection.execute('SELECT * FROM products');
   return arrayProducts;
 };
@@ -10,7 +10,34 @@ const getProductsById = async (id) => {
   return product;
 };
 
+// função que ira criar um novo produto se comunicando com o bd req 4
+const createProduct = async (name, quantity) => {
+  console.log('cheguei model');
+  const [{ insertId }] = await connection
+    .execute('INSERT INTO products (name, quantity) VALUES (?, ?)', [name, quantity]);
+  return {
+    id: insertId, // insertId para pegar o id  
+    name,
+    quantity,
+  };
+};
+
+// funcao para retornar um produto pelo nome 
+const getProductsByName = async (name) => {
+  const [product] = await connection.execute('SELECT * FROM products WHERE name = ?', [name]);
+  console.log(product);
+  console.log('----------');
+  console.log([product]);
+  console.log('----------');
+  console.log(product[0]);
+  console.log('----------');
+  console.log([[product]]);
+  return product[0];
+};
+
 module.exports = {
-getProducts,
-getProductsById,
+  getProductsByName,
+  createProduct,
+  getProducts,
+  getProductsById,
 };

@@ -25,7 +25,22 @@ const getProductsById = async (req, res) => {
   }
 };
 
+const createProduct = async (req, res) => {
+  console.log('cheguei controler');
+  try {
+    const { name, quantity } = req.body;
+
+    const { code, message, product } = await products.createProduct(name, quantity);
+    if (!product) return res.status(code).json({ message });
+    return res.status(code).json(product);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).end();
+  }
+};
+
 module.exports = {
+  createProduct,
   getProducts,
   getProductsById,
 };
