@@ -30,15 +30,12 @@ const createSale = async (data) => {
   const deleteSales = async (id) => {
     const sale = await sales.getSalesById(id);
   
-    if (sale.length === 0) {
-      const errorObject = {
-        status: 404,
-        message: 'Sale not found',
-      };
-      throw errorObject;
+    if (!sale.length) {
+      return { code: 404, message: 'Sale not found' };
     }
   
     await sales.deleteSales(id);
+    return { code: 204 };
   };
 
   const updateSale = async (saleId, quantity, productId) => {

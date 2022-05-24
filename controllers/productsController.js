@@ -53,11 +53,11 @@ const updateProducts = async (req, res) => {
   }
 };
 
+// req6
 async function deleteProducts(req, res) {
   console.log('controler delete');
   try {
     const { id } = req.params;
-
     const { code, message } = await products.deleteProducts(id);
     if (message) return res.status(code).json({ message });
     return res.status(code).end();

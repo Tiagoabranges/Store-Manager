@@ -12,6 +12,6 @@ router.get('/:id', sales.getSalesById); // req 2
 router.post('/', isValidProductId, isValidQuantity, sales.createSale); // req 7
 
 router.put('/:id', IdValidation, amountSoldValidation, sales.updateSale); // req 8
-router.delete('/:id', isValidProductId, isValidQuantity, sales.deleteSales);
+router.delete('/:id', sales.deleteSales);
 
 module.exports = router;

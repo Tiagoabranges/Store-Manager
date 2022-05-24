@@ -42,13 +42,16 @@ const createSale = async (req, res, _next) => {
   }
 };
 
-const deleteSales = async (req, res, next) => {
+// req 10
+const deleteSales = async (req, res) => {
   const { id } = req.params;
   try {
-    await sales.deleteSales(id);
-    res.status(204).end();
+    const { code, message } = await sales.deleteSales(id);
+    if (message) return res.status(code).json({ message });
+    return res.status(code).end();
   } catch (error) {
-    next(error);
+    console.log(error);
+    return res.status(500).end();
   }
 };
 
