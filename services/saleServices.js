@@ -27,14 +27,6 @@ const createSale = async (data) => {
     return ({ id: newSale.insertId, itemsSold: data });
   };
 
-  const deleteSale = async (id) => {
-    const foundById = await sales.findOneById(id);
-    if (!foundById) {
-      return { status: 404, body: { message: 'Sale not found' } };
-    }
-    return { status: 204, body: await sales.removeSale(id) };
-   };
-
   const updateSale = async (saleId, quantity, productId) => {
     console.log('cheguei service');
     sales.updateSale(saleId, quantity, productId);
@@ -42,7 +34,6 @@ const createSale = async (data) => {
 };
 module.exports = {
     updateSale,
-    deleteSale,
     createSale,
     getSales,
     getSalesById,
