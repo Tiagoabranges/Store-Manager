@@ -6,7 +6,8 @@ const getProducts = async () => { // conectando com o bd para trazer a lista dos
 };
  // funcao para retornar produtos fazendo uma conexao com o banco de dados req 2
 const getProductsById = async (id) => {
-  const [product] = await connection.execute('SELECT * FROM products WHERE id = ?', [id]);
+  const [product] = await connection
+  .execute('SELECT * FROM products WHERE id = ?', [id]);
   return product;
 };
 

@@ -54,7 +54,7 @@ const updateProducts = async (req, res) => {
 };
 
 async function deleteProducts(req, res) {
-  console.log();
+  console.log('controler delete');
   try {
     const { id } = req.params;
 

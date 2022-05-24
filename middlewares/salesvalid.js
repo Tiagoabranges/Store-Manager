@@ -1,3 +1,4 @@
+// middlewares de validacao REQ3 para sales
 const IdValidation = (req, res, next) => {
   const id = req.body;
   if (id.find(({ productId }) => !productId)) {

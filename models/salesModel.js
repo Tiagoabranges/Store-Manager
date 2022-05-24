@@ -1,5 +1,5 @@
 const connection = require('./connection');
-
+ // funcao para retornar vendas fazendo uma conexao com o banco de dados req 2
 const getSales = async () => {
     const [sales] = await connection.execute(`
       SELECT
@@ -19,7 +19,7 @@ const getSales = async () => {
     `);
     return sales;
 };
-
+ // funcao para retornar vendas pelo id fazendo uma conexao com o banco de dados req 2
 const getSalesById = async (id) => {
   const [salesId] = await connection.execute(
     `
@@ -40,33 +40,40 @@ const getSalesById = async (id) => {
   return salesId;
 };
 
+// Crie um endpoint para cadastrar vendas req 7
 const createSale = async () => {
   const query = 'INSERT INTO StoreManager.sales (date) VALUES (NOW());';
   const [newSale] = await connection.execute(query);
   return newSale;
 };
 
-const createSaleProduct = async (id, productId, quantity) => {
+/* const createSaleProduct = async (id, productId, quantity) => {
   const query = `
   INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity)
   VALUES (?,?,?)`;
   await connection.execute(query, [id, productId, quantity]);
+}; */
+
+const updateSale = async (saleId, quantity, productId) => {
+  console.log('cheguei model');
+  const [update] = await connection.execute(
+      `
+      UPDATE StoreManager.sales_products
+      SET quantity = ?, product_id = ?
+      WHERE sale_id = ?`,
+      [quantity, productId, saleId],
+    );
+  return update;
 };
 
 const deleteSales = async (id) => {
   await connection.execute('DELETE FROM StoreManager.sales_products WHERE sale_id = ?', [id]);
 };
 
-const updateSale = async (saleId, productId, quantity) => {
-  const query = `UPDATE sales_products
-  SET quantity = ?
-  WHERE sale_id = ? AND product_id = ?;`; 
-   await connection.execute(query, [quantity, saleId, productId]);
-};
 module.exports = {
   updateSale,
   deleteSales,
-  createSaleProduct,
+ // createSaleProduct,
   createSale,
     getSales,
     getSalesById,

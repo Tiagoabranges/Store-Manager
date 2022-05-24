@@ -1,10 +1,12 @@
 const sales = require('../models/salesModel');
 
+// req 2 função vindo do models enviando ao controller para retornar vendas
 const getSales = async () => {
     const salesList = await sales.getSales();
     return salesList;
 };
 
+// req 2 função vindo do models e enviando ao controller para retornar vendas pelo id
 const getSalesById = async (id) => {
     const sale = await sales.getSalesById(id);
     if (!sale.length) return { code: 404, message: 'Sale not found' };
@@ -31,11 +33,11 @@ const createSale = async (data) => {
     return { status: 204, body: await sales.removeSale(id) };
    };
 
-  const updateSale = async (id, item) => {
-    const { productId, quantity } = item[0];
-    await sales.updateSales(id, productId, quantity);
-      return { saleId: id, itemUpdated: item };
-  };
+  const updateSale = async (saleId, quantity, productId) => {
+    console.log('cheguei service');
+    sales.updateSale(saleId, quantity, productId);
+    return { saleId, itemUpdated: [{ productId, quantity }] };
+};
 module.exports = {
     updateSale,
     deleteSale,

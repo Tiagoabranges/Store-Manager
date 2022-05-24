@@ -1,3 +1,4 @@
+// middlewares de validacao REQ3 para products
 const productsValidation = (req, res, next) => {
   // console.log(req.body);
   if (!req.body.name) {

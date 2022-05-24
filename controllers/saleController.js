@@ -2,6 +2,7 @@
 
 const sales = require('../services/saleServices');
 
+// req 2 função vindo do services e enviando ao app.js para retornar vendas
 const getSales = async (_req, res) => {
   try {
       const salesList = await sales.getSales();
@@ -12,6 +13,7 @@ const getSales = async (_req, res) => {
   }
 };
 
+// req 2 função vindo do services e enviando ao app.js para retornar vendas pelo id
 const getSalesById = async (req, res) => {
   try {
       const { id } = req.params;
@@ -51,12 +53,19 @@ const deleteSales = async (req, res, _next) => {
   }
 };
 
-const updateSale = async (req, res) => {
-  const { id } = req.params;
-  const item = req.body;
-  const updatedProduct = await sales.update(id, item);
-  return res.status(201).json(updatedProduct);
+const updateSale = async (req, res, next) => {
+  console.log('cheguei controller');
+  try {
+      const { quantity, productId } = req.body[0];
+      const saleId = req.params.id;
+
+      const update = await sales.updateSale(saleId, quantity, productId);
+      res.status(200).json(update); 
+  } catch (err) {
+      next(err);
+  }
 };
+
 module.exports = {
   updateSale,
   deleteSales,
