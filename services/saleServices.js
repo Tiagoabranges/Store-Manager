@@ -13,10 +13,12 @@ const getSalesById = async (id) => {
     return { code: 200, sale };
 };
 
+// req 7
 const createSale = async (data) => {
     const newSale = await sales.createSale();
   
-    // para cada elemento do array data(que são as informações passadas no body), chamamos a função createSaleProduct que insere os dados na tabela e retorna o novo id(insertId) e o objeto itemsSold com as novas informações 
+    // para cada elemento do array data(que são as informações passadas no body), chamamos a função createSaleProduct 
+    // que insere os dados na tabela e retorna o novo id(insertId) e o objeto itemsSold com as novas informaçõesss
     await data.forEach(
       ({ productId, quantity }) => (
         sales.createSaleProduct(newSale.insertId, productId, quantity)

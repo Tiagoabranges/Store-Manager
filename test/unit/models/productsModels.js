@@ -17,18 +17,18 @@ const getProdById = {
   quantity: 10,
 }
 describe('Test Product Model', () => {
-  describe('GET', () => {
+  describe('verifica', () => {
     before(() => {
       sinon.stub(connection, 'query').resolves([[product]]);
     });
     after(() => connection.query.restore());
-    it('verifica se retorna um array', async () => {
+    it('se retorna um array', async () => {
       const obj = await productsModel.getProducts();
       expect(obj).to.be.a("array");
     })
   })
 
-  describe('CREATE', () => {
+  describe('Funcao createPorducts', () => {
     before(() => {
       sinon.stub(connection, 'execute').resolves([{ insertId: 01 }]);
     });
@@ -39,7 +39,8 @@ describe('Test Product Model', () => {
     })
   });
 
-  describe('verifica se ao buscar pelo id', () => {
+  describe('funcao getProductId', () => {
+    describe('verifica', () => {
     before(() => {
       sinon.stub(connection, 'query').resolves([getProdById]);
     });
@@ -48,5 +49,6 @@ describe('Test Product Model', () => {
       const obj = await productsModel.getProductsById(01);
       expect(obj).to.be.a("array");
     })
+  });
   })
 });

@@ -11,7 +11,7 @@ const sales = {
 }
 
 describe('Test Sale Service', () => {
-  describe('GET', () => {
+  describe('funcao getSales', () => {
     before(() => {
       sinon.stub(salesModel, 'getSales').resolves([sales]);
     });
@@ -22,7 +22,7 @@ describe('Test Sale Service', () => {
     })
   })
 
-  describe(' GET BY ID', () => {
+  describe('funcao getSalesId', () => {
     before(() => {
       sinon.stub(salesModel, 'getSalesById').resolves([sales]);
     });

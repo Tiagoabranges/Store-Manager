@@ -46,13 +46,13 @@ const createSale = async () => {
   const [newSale] = await connection.execute(query);
   return newSale;
 };
-
-/* const createSaleProduct = async (id, productId, quantity) => {
+// req 7
+ const createSaleProduct = async (id, productId, quantity) => {
   const query = `
   INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity)
   VALUES (?,?,?)`;
   await connection.execute(query, [id, productId, quantity]);
-}; */
+}; 
 
 const updateSale = async (saleId, quantity, productId) => {
   console.log('cheguei model');
@@ -73,7 +73,7 @@ const deleteSales = async (id) => {
 module.exports = {
   updateSale,
   deleteSales,
- // createSaleProduct,
+  createSaleProduct,
   createSale,
     getSales,
     getSalesById,
