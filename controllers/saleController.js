@@ -42,6 +42,16 @@ const createSale = async (req, res, _next) => {
   }
 };
 
+const deleteSales = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await sales.deleteSales(id);
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+};
+
 const updateSale = async (req, res, next) => {
   console.log('cheguei controller');
   try {
@@ -57,6 +67,7 @@ const updateSale = async (req, res, next) => {
 
 module.exports = {
   updateSale,
+  deleteSales,
   createSale,
   getSales,
   getSalesById,
