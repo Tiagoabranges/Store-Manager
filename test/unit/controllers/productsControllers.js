@@ -25,7 +25,7 @@ describe(' TEST 1- Test Product Controller', () => {
 
   describe('TEST 2- test getProductsById', () => {
     before(() => {
-      sinon.stub(productsService, 'getProductsById').resolves(payload);
+      sinon.stub(productsService, 'getProductsById').resolves([payload]);
     });
     after(() => productsService.getProductsById.restore());
     it('verifica o retorno', async () => {
@@ -41,7 +41,7 @@ describe(' TEST 1- Test Product Controller', () => {
     });
     after(() => productsService.createProduct.restore());
     it('verifica o retorno', async () => {
-      const obj = await productsService.createProduct(product);
+      const obj = await productsService.createProduct(payload);
       expect(obj).to.be.a("object");
     })
   })

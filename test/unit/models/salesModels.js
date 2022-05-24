@@ -40,3 +40,14 @@ describe('Test Sale Model', () => {
     })
   })
 });
+
+describe('Funcao createPorducts', () => {
+  before(() => {
+    sinon.stub(connection, 'execute').resolves([{ insertId: 01 }]);
+  });
+  after(() => connection.execute.restore());
+  it('Verifica se retorna um objeto', async () => {
+    const obj = await salesModel.createSale(salesGetAll);
+    expect(obj).to.be.a("object");
+  })
+});

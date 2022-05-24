@@ -3,8 +3,7 @@ const expect = chai.expect;
 const sinon = require('sinon');
 const salesService = require('../../../services/saleServices');
 const salesController = require('../../../controllers/saleController');
-const response = {};
-const request = {}
+
 
 const payloadGetAll = [
     {
@@ -94,7 +93,7 @@ describe('Test Sales Controller', () => {
     after(() => salesService.updateSale.restore());
     it('verifica o retorno [CONTROLLER]', async () => {
       request.body = payload;
-      await salesController.updateSale, (request,response);
+      await salesController.update(request, response);
       expect(response.status.calledWith(200)).to.be.true;
     })
   })
