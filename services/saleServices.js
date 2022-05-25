@@ -23,6 +23,7 @@ const createSale = async (arrayOfParams) => {
   if (result === 'fail') throw errorHandles(422, 'Such amount is not permitted to sell'); 
   return saleId;
 };
+
   const deleteSales = async (id) => {
     const affectedRow = await sales.deleteSales(id);
   

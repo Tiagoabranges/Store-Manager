@@ -58,6 +58,7 @@ const updateProductById = async (productId, quantity, operator) => {
 
   const [[actualQuantity]] = await connection.execute(getQuantity, [productId]);
   const newQuantity = calculadora(actualQuantity.quantity, quantity, operator);
+  if (newQuantity <= 0) return 'fail';
   await connection.execute(query, [newQuantity, productId]);
 };
 module.exports = {
