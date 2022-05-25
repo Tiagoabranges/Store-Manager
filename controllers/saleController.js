@@ -74,7 +74,6 @@ const deleteSales = async (req, res, next) => {
 
     res.status(204).json();
   } catch (error) {
-    console.log('cheguei controler');
     console.log('Delete sale by id:', error.message);
     next(error);
   }

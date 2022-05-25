@@ -14,5 +14,6 @@ router.post('/', errorMiddleware, isValidProductId, isValidQuantity, sales.creat
 
 router.put('/:id', IdValidation, amountSoldValidation, sales.updateSale); // req 8
 router.delete('/:id', errorMiddleware, sales.deleteSales);
+router.use(errorMiddleware);
 
 module.exports = router;
