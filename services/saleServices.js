@@ -18,12 +18,11 @@ const getSalesById = async (id) => {
 // req 7
 const createSale = async (arrayOfParams) => {
   const saleId = await sales.createSale(arrayOfParams);
-  arrayOfParams.forEach(async (element) => {
-    await productModel.updateProductById(element.productId, element.quantity, '-');
-  });
+  const result = await 
+    productModel.updateProductById(arrayOfParams[0].productId, arrayOfParams[0].quantity, '-');
+  if (result === 'fail') throw errorHandles(422, 'Such amount is not permitted to sell'); 
   return saleId;
 };
-
   const deleteSales = async (id) => {
     const affectedRow = await sales.deleteSales(id);
   
