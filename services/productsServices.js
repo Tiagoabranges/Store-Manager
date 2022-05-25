@@ -25,7 +25,7 @@ const createProduct = async (name, quantity) => {
     const updatedProducts = await products.updateProducts(name, quantity, id);
     return { code: 200, updatedProducts };
   };
-
+// req 6
   const deleteProducts = async (id) => {
     const product = await products.getProductsById(id);
      if (!product.length) return { code: 404, message: 'Product not found' };

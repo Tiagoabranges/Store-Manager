@@ -1,5 +1,7 @@
+const productModel = require('../models/productsModel');
 const sales = require('../models/salesModel');
 
+const errorHandles = (status, message) => ({ status, message });
 // req 2 função vindo do models enviando ao controller para retornar vendas
 const getSales = async () => {
     const salesList = await sales.getSales();
@@ -14,35 +16,27 @@ const getSalesById = async (id) => {
 };
 
 // req 7
-const createSale = async (data) => {
-    const newSale = await sales.createSale();
-  
-    // para cada elemento do array data(que são as informações passadas no body), chamamos a função createSaleProduct 
-    // que insere os dados na tabela e retorna o novo id(insertId) e o objeto itemsSold com as novas informaçõesss
-    await data.forEach(
-      ({ productId, quantity }) => (
-        sales.createSaleProduct(newSale.insertId, productId, quantity)
-      ),
-    );
-    return ({ id: newSale.insertId, itemsSold: data });
-  };
+const createSale = async (arrayOfParams) => {
+  const saleId = await sales.createSale(arrayOfParams);
+  const result = await 
+    productModel.updateProductById(arrayOfParams[0].productId, arrayOfParams[0].quantity, '-');
+  if (result === 'fail') throw errorHandles(422, 'Such amount is not permitted to sell'); 
+  return saleId;
+};
 
   const deleteSales = async (id) => {
-    const sale = await sales.getSalesById(id);
-  
-    if (!sale.length) {
-      return { code: 404, message: 'Sale not found' };
-    }
-  
-    await sales.deleteSales(id);
-    return { code: 204 };
+    console.log('cheguei service delete');
+    const affectedRow = await sales.deleteSales(id);
+    console.log(affectedRow);
+    if (!affectedRow) throw errorHandles(404, 'Sale not found');
   };
 
-  const updateSale = async (saleId, quantity, productId) => {
-    console.log('cheguei service');
-    sales.updateSale(saleId, quantity, productId);
-    return { saleId, itemUpdated: [{ productId, quantity }] };
-};
+  const updateSale = async (productId, quantity, id) => {
+    const result = await sales.updateSale(productId, quantity, id);
+  
+    return result;
+  };
+  
 module.exports = {
     updateSale,
     deleteSales,

@@ -28,43 +28,55 @@ const getSalesById = async (req, res) => {
   }
 };
 
-const createSale = async (req, res, _next) => {
+const createSale = async (req, res, next) => {
   try {
-    const data = req.body;
-     // console.log(data)
+    const arrayOfParams = req.body;
 
-    const newSale = await sales.createSale(data);
+    const saleId = await sales.createSale(arrayOfParams);
 
-    return res.status(201).json(newSale);
+    const responseFormat = {
+      id: saleId,
+      itemsSold: req.body,
+    };
+
+    res.status(201).json(responseFormat);
   } catch (error) {
-    // console.log(error)
-    return res.status(404).json({ message: error.message });
-  }
-};
-
-// req 10
-const deleteSales = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const { code, message } = await sales.deleteSales(id);
-    if (message) return res.status(code).json({ message });
-    return res.status(code).end();
-  } catch (error) {
-    console.log(error);
-    return res.status(500).end();
+    console.log('Add new sale:', error.message);
+    next(error);
   }
 };
 
 const updateSale = async (req, res, next) => {
   console.log('cheguei controller');
   try {
-      const { quantity, productId } = req.body[0];
-      const saleId = req.params.id;
+    const { id } = req.params;
+    const { productId, quantity } = req.body[0];
 
-      const update = await sales.updateSale(saleId, quantity, productId);
-      res.status(200).json(update); 
-  } catch (err) {
-      next(err);
+    const saleId = await sales.updateSale(productId, quantity, id);
+
+    const responseFormat = {
+      saleId,
+      itemUpdated: req.body,
+    };
+
+    res.status(200).json(responseFormat);
+  } catch (error) {
+    console.log('Update saleById:', error.message);
+    next(error);
+  }
+};
+
+// req 10
+const deleteSales = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await sales.deleteSales(id);
+
+    res.status(204).json();
+  } catch (error) {
+    console.log('cheguei controler');
+    console.log('Delete sale by id:', error.message);
+    next(error);
   }
 };
 

@@ -1,4 +1,6 @@
+const getCurrentDate = require('../data');
 const connection = require('./connection');
+const productModel = require('./productsModel');
  // funcao para retornar vendas fazendo uma conexao com o banco de dados req 2
 const getSales = async () => {
     const [sales] = await connection.execute(`
@@ -41,10 +43,17 @@ const getSalesById = async (id) => {
 };
 
 // Crie um endpoint para cadastrar vendas req 7
-const createSale = async () => {
-  const query = 'INSERT INTO StoreManager.sales (date) VALUES (NOW());';
-  const [newSale] = await connection.execute(query);
-  return newSale;
+const createSale = async (arrayOfParams) => {
+  const query = 'INSERT INTO StoreManager.sales (date) VALUES (?)';
+  const query2 = `INSERT INTO StoreManager.sales_products 
+    (sale_id, product_id, quantity) VALUES (?, ?, ?)`;
+  const date = getCurrentDate();
+  const [response] = await connection.execute(query, [date]);
+  
+  arrayOfParams.forEach(async (element) => {
+    await connection.execute(query2, [response.insertId, element.productId, element.quantity]);
+  });
+  return response.insertId;
 };
 // req 7
  const createSaleProduct = async (id, productId, quantity) => {
@@ -54,21 +63,27 @@ const createSale = async () => {
   await connection.execute(query, [id, productId, quantity]);
 }; 
 
-const updateSale = async (saleId, quantity, productId) => {
-  console.log('cheguei model');
-  const [update] = await connection.execute(
-      `
-      UPDATE StoreManager.sales_products
-      SET quantity = ?, product_id = ?
-      WHERE sale_id = ?`,
-      [quantity, productId, saleId],
-    );
-  return update;
+const updateSale = async (productId, quantity, id) => {
+  const query = `UPDATE StoreManager.sales_products 
+  SET product_id = ?, quantity = ? WHERE sale_id = ? AND product_id = ?`;
+
+  await connection.execute(query, [productId, quantity, id, productId]);
+
+  return id;
 };
 
 const deleteSales = async (id) => {
-  await connection.execute('DELETE FROM StoreManager.sales WHERE id =?',
-  [id]);
+  const query = 'DELETE FROM StoreManager.sales WHERE id = ?';
+  const query2 = 'DELETE FROM StoreManager.sales_products WHERE sale_id = ?';
+  const test = await getSalesById(id);
+  test.forEach(async (element) => {
+    await productModel.updateProductById(element.productId, element.quantity, '+');
+  });
+  console.log('cheguei model delete');
+  const [result] = await connection.execute(query, [id]);
+  await connection.execute(query2, [id]);
+  console.log(` resultado model ${result.affectedRows}`);
+  return result.affectedRows;
 };
 
 module.exports = {

@@ -1,3 +1,4 @@
+const calculadora = require('../calc');
 const connection = require('./connection');
 
 const getProducts = async () => { // conectando com o bd para trazer a lista dos produtos req 2
@@ -16,11 +17,12 @@ const createProduct = async (name, quantity) => {
   console.log('cheguei model');
   const [{ insertId }] = await connection
     .execute('INSERT INTO products (name, quantity) VALUES (?, ?)', [name, quantity]);
-  return {
+  const product = {
     id: insertId, // insertId para pegar o id  
     name,
     quantity,
   };
+  return product;
 };
 
 // funcao para retornar um produto pelo nome 
@@ -50,7 +52,17 @@ const deleteProducts = async (id) => {
   return {};
 };
 
+const updateProductById = async (productId, quantity, operator) => {
+  const getQuantity = 'SELECT quantity FROM StoreManager.products WHERE id = ?';
+  const query = 'UPDATE StoreManager.products SET quantity = ? WHERE id = ?';
+
+  const [[actualQuantity]] = await connection.execute(getQuantity, [productId]);
+  const newQuantity = calculadora(actualQuantity.quantity, quantity, operator);
+  await connection.execute(query, [newQuantity, productId]);
+};
+
 module.exports = {
+  updateProductById,
   deleteProducts,
   updateProducts,
   getProductsByName,
