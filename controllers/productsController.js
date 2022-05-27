@@ -7,7 +7,7 @@ const getProducts = async (_req, res) => {
     return res.status(200).json(productsList);
   } catch (error) {
     console.log(error);
-    return res.status(500).end();
+    return res.status(500);
   }
 };
 
@@ -23,7 +23,7 @@ const getProductsById = async (req, res) => {
     return res.status(code).json(product[0]);
   } catch (error) {
     console.log(error);
-    return res.status(500).end();
+    return res.status(500);
   }
 };
 
@@ -38,7 +38,7 @@ const createProduct = async (req, res) => {
     return res.status(code).json(product);
   } catch (error) {
     console.log(error);
-    return res.status(500).end();
+    return res.status(500);
   }
 };
 
@@ -53,7 +53,7 @@ const updateProducts = async (req, res) => {
     return res.status(code).json(updatedProducts);
   } catch (error) {
     console.log(error);
-    return res.status(500).end();
+    return res.status(500);
   }
 };
 
@@ -64,10 +64,10 @@ async function deleteProducts(req, res) {
     const { id } = req.params;
     const { code, message } = await products.deleteProducts(id);
     if (message) return res.status(code).json({ message });
-    return res.status(code).end();
+    return res.status(code);
   } catch (error) {
     console.log(error);
-    return res.status(500).end();
+    return res.status(500);
   }
 }
 module.exports = {
