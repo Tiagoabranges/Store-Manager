@@ -1,4 +1,4 @@
-// middlewares de validacao REQ3 para products
+// 3 - Crie middlewares de validação para as rotas /products e /sales
 const productsValidation = (req, res, next) => {
   // console.log(req.body);
   if (!req.body.name) {

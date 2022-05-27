@@ -1,5 +1,6 @@
 const products = require('../services/productsServices');
 
+// 2 - Crie endpoints para listar os produtos e as vendas
 const getProducts = async (_req, res) => {
   try {
     const productsList = await products.getProducts();
@@ -10,6 +11,7 @@ const getProducts = async (_req, res) => {
   }
 };
 
+// req 2
 const getProductsById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -25,6 +27,7 @@ const getProductsById = async (req, res) => {
   }
 };
 
+// 4 - Crie um endpoint para o cadastro de produtos
 const createProduct = async (req, res) => {
   console.log('cheguei controler');
   try {
@@ -39,6 +42,7 @@ const createProduct = async (req, res) => {
   }
 };
 
+// 5 - Crie um endpoint para atualizar um produto
 const updateProducts = async (req, res) => {
   try {
     const { id } = req.params;
@@ -53,7 +57,7 @@ const updateProducts = async (req, res) => {
   }
 };
 
-// req6
+// 6 - Crie um endpoint para deletar um produto
 async function deleteProducts(req, res) {
   console.log('controler delete');
   try {

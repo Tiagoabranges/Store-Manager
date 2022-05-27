@@ -10,10 +10,12 @@ router.get('/', sales.getSales); // req 2
 
 router.get('/:id', sales.getSalesById); // req 2
 
-router.post('/', errorMiddleware, isValidProductId, isValidQuantity, sales.createSale); // req 7
+router.post('/', isValidProductId, isValidQuantity, sales.createSale); // req 7
 
 router.put('/:id', IdValidation, amountSoldValidation, sales.updateSale); // req 8
-router.delete('/:id', errorMiddleware, sales.deleteSales);
+
+router.delete('/:id', errorMiddleware, sales.deleteSales); // req 10
+
 router.use(errorMiddleware);
 
 module.exports = router;

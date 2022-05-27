@@ -1,3 +1,4 @@
+// 3 - Crie middlewares de validação para as rotas /products e /sales
 const isValidProductId = (req, res, next) => {
   const sales = req.body;
   const isValid = sales.every(({ productId }) => productId !== undefined);

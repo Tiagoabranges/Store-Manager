@@ -1,100 +1,74 @@
 const chai = require('chai');
 const expect = chai.expect;
 const sinon = require('sinon');
-const salesService = require('../../../services/saleServices');
-const salesController = require('../../../controllers/saleController');
+const saleService = require('../../../services/saleServices');
+const saleController = require('../../../controllers/saleController');
 
 
-const payloadGetAll = [
+
+describe('getAll sales at Controller', () => {
+  const req = {};
+  const res = {};
+  const payload = [
     {
-      "saleId": 1,
-      "date": "2021-09-09T04:54:29.000Z",
-      "productId": 1,
-      "quantity": 2
-    },
-    {
-      "saleId": 1,
-      "date": "2021-09-09T04:54:54.000Z",
-      "productId": 2,
-      "quantity": 2
+      saleId: 1,
+      date: '2022-05-20T05:01:48.000Z',
+      productId: 1,
+      quantity: 5
     }
-]
+];
 
-const payload = {
-  "saleId": 1,
-  "date": "2021-09-09T04:54:29.000Z",
-  "productId": 1,
-  "quantity": 2
-}
+before(() => {
+  sinon.stub(saleService, 'getSales').resolves(payload);
+  res.status = sinon.stub().returns(res);
+  res.json = sinon.stub().returns(payload);
+});
 
-const payloadGetById =   [
+after(() => {
+saleService.getSales.restore();
+});
+
+it('array of object with sales is Returned', async () => {
+await saleController.getSales(req, res);
+expect(res.json.calledWith(payload)).to.be.equal(true);
+});
+
+it('Status 200 is returned?', async () => {
+await saleController.getSales(req, res);
+expect(res.status.calledWith(200)).to.be.equal(true);
+});
+});
+
+describe('getSalesById at Controller', () => {
+const req = {};
+const res = {};
+const payload = [
   {
-    "date": "2021-09-09T04:54:29.000Z",
-    "productId": 1,
-    "quantity": 2
-  },
-  {
-    "date": "2021-09-09T04:54:54.000Z",
-    "productId": 2,
-    "quantity": 2
+    saleId: 1,
+    date: '2022-05-20T05:01:48.000Z',
+    productId: 1,
+    quantity: 5
   }
-]
+];
 
-describe('Test Sales Controller', () => {
-  describe('GET', () => {
-    before(() => {
-      sinon.stub(salesService, 'getSales').resolves(payloadGetAll);
-      response.status = sinon.stub().returns(response);
-      response.json = sinon.stub().returns()
-    });
-    after(() => salesService.getSales.restore());
-    it('verifica o retorno', async () => {
-      await salesController.getSales(request, response);
-      expect(response.status.calledWith(200)).to.be.true;
-      expect(response.json.calledWith(payloadGetAll)).to.be.true;
-    })
-  })
+before(() => {
+sinon.stub(saleService, 'getSalesById').resolves(payload);
+res.status = sinon.stub().returns(res);
+res.json = sinon.stub().returns(payload);
+req.params = sinon.stub().returns(1);
+});
 
-  describe(' GET BY ID', () => {
-    before(() => {
-      sinon.stub(salesService, 'getSalesById').resolves(payloadGetById);
-      response.status = sinon.stub().returns(response);
-      response.json = sinon.stub().returns()
-    });
-    after(() => salesService.getSalesById.restore());
-    it('verifica o retorno', async () => {
-      request.params = {id: 01};
-      await salesController.getSalesById(request, response);
-      expect(response.status.calledWith(200)).to.be.true;
-      expect(response.json.calledWith(payloadGetById)).to.be.true;
-    })
-  })
+after(() => {
+saleService.getSalesById.restore();
+});
 
-  describe('CREATE', () => {
-    before(() => {
-      sinon.stub(salesService, 'createSale').resolves(payload);
-      response.status = sinon.stub().returns(response);
-      response.json = sinon.stub().returns()
-    });
-    after(() => salesService.createSale.restore());
-    it('verifica o retorno [CONTROLLER]', async () => {
-      request.body = payload;
-      await salesController.createSale(request, response);
-      expect(response.status.calledWith(201)).to.be.true;
-    })
-  })
+it('sale is Returned', async () => {
+await saleController.getSalesById(req, res);
+expect(res.json.calledWith(payload)).to.be.equal(true);
+});
 
-  describe('UPDATE', () => {
-    before(() => {
-      sinon.stub(salesService, 'updateSale').resolves(payload);
-      response.status = sinon.stub().returns(response);
-      response.json = sinon.stub().returns()
-    });
-    after(() => salesService.updateSale.restore());
-    it('verifica o retorno [CONTROLLER]', async () => {
-      request.body = payload;
-      await salesController.update(request, response);
-      expect(response.status.calledWith(200)).to.be.true;
-    })
-  })
+it('Status 200 is returned?', async () => {
+await saleController.getSalesById(req, res);
+expect(res.status.calledWith(200)).to.be.equal(true);
+});
 });

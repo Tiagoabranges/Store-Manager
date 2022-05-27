@@ -28,6 +28,7 @@ const getSalesById = async (req, res) => {
   }
 };
 
+// req 7
 const createSale = async (req, res, next) => {
   try {
     const arrayOfParams = req.body;
@@ -46,6 +47,7 @@ const createSale = async (req, res, next) => {
   }
 };
 
+// req 8
 const updateSale = async (req, res, next) => {
   console.log('cheguei controller');
   try {
@@ -66,7 +68,7 @@ const updateSale = async (req, res, next) => {
   }
 };
 
-// req 10
+// 10 - Crie um endpoint para deletar uma venda
 const deleteSales = async (req, res, next) => {
   try {
     const { id } = req.params;

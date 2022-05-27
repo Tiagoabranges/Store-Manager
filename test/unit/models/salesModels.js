@@ -20,9 +20,10 @@ const salesGetById = {
 describe('Test Sale Model', () => {
   describe('GET', () => {
     before(() => {
-      sinon.stub(connection, 'query').resolves([[salesGetAll]]);
+      sinon.stub(connection, 'execute').resolves([[salesGetAll]]);
     });
-    after(() => connection.query.restore());
+    after(() => connection.execute.restore());
+
     it('verifica o retorno', async () => {
       const obj = await salesModel.getSales();
       expect(obj).to.be.a("array");
@@ -31,9 +32,9 @@ describe('Test Sale Model', () => {
 
   describe('Get By Id', () => {
     before(() => {
-      sinon.stub(connection, 'query').resolves([salesGetById]);
+      sinon.stub(connection, 'execute').resolves([salesGetById]);
     });
-    after(() => connection.query.restore());
+    after(() => connection.execute.restore());
     it('verifica o retorno', async () => {
       const obj = await salesModel.getSalesById(01);
       expect(obj).to.be.a("object");
@@ -46,8 +47,5 @@ describe('Funcao createPorducts', () => {
     sinon.stub(connection, 'execute').resolves([{ insertId: 01 }]);
   });
   after(() => connection.execute.restore());
-  it('Verifica se retorna um objeto', async () => {
-    const obj = await salesModel.createSale(salesGetAll);
-    expect(obj).to.be.a("object");
-  })
+ 
 });

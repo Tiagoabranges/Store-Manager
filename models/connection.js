@@ -1,3 +1,4 @@
+// criando conexão com o banco de dados 
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 

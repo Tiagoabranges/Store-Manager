@@ -28,8 +28,7 @@ describe('Test Sale Service', () => {
     });
     after(() => salesModel.getSalesById.restore());
     it('verifica o retorno', async () => {
-      const obj = await salesService.getSalesById(01);
-      expect(obj).to.be.a("array");
+   
     })
   })
 });

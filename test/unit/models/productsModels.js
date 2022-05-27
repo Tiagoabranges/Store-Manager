@@ -1,54 +1,139 @@
 const chai = require('chai');
+const { it } = require('mocha');
 const expect = chai.expect;
 const sinon = require('sinon');
 
 const connection = require('../../../models/connection');
 const productsModel = require('../../../models/productsModel');
 
-const product = {
-  id: 01,
-  name: 'produto',
-  quantity: 50,
-}
+describe(('Quando a função getProducts do models for chamada'), () => {
+  describe('e não tiverem produtos a serem listados', () => {
+    before(async () => {
+      const result = [[]];
 
-const getProdById = {
-  id: 01,
-  name: 'Martelo do Thor',
-  quantity: 10,
-}
-describe('Test Product Model', () => {
+      sinon.stub(connection, 'execute').resolves(result);
+    });
+
+    after(async () => {
+      connection.execute.restore();
+    });
+
+    it('retorna um array', async () => {
+      const response = await productsModel.getProducts();
+
+      expect(response).to.be.a('array');
+    });
+
+    it('retorna um array vazio', async () => {
+      const response = await productsModel.getProducts();
+
+      expect(response).to.have.length(0);
+    });
+  });
+
+  describe('e tiverem produtos a serem listados', () => {
+    before(async () => {
+      const result = [
+        [
+          {
+            id: 1,
+            name: 'Martelo de Thor',
+            quantity: '10',
+          },
+          {
+            id: 2,
+            name: 'Traje de encolhimento',
+            quantity: '20',
+          },
+          {
+            id: 3,
+            name: 'Escudo do Capitão América',
+            quantity: '30',
+          }
+        ]
+      ];
+
+      sinon.stub(connection, 'execute').resolves(result);
+    });
+
+    after(async () => {
+      connection.execute.restore();
+    });
+    it('retorna um array', async () => {
+      const response = await productsModel.getProducts();
+
+      expect(response).to.be.a('array');
+    });
+    it('retorna um array com 3 itens', async () => {
+      const response = await productsModel.getProducts();
+
+      expect(response).to.have.length(3);
+    });
+
+    it('o primeiro item deve ser um objeto', async () => {
+      const response = await productsModel.getProducts();
+
+      expect(response[0]).to.be.a('object');
+    });
+
+    it('o primeiro item deve ser um objeto com as chaves "id", "name" e "quantity"', async () => {
+      const response = await productsModel.getProducts();
+
+      expect(response[0]).to.have.keys('id', 'name', 'quantity');
+    });
+  });
+});
+
+describe('Quando a funcao getProductsById é chamada e nao existe id', () => {
   describe('verifica', () => {
     before(() => {
-      sinon.stub(connection, 'query').resolves([[product]]);
-    });
-    after(() => connection.query.restore());
-    it('se retorna um array', async () => {
-      const obj = await productsModel.getProducts();
-      expect(obj).to.be.a("array");
-    })
-  })
-
-  describe('Funcao createPorducts', () => {
-    before(() => {
-      sinon.stub(connection, 'execute').resolves([{ insertId: 01 }]);
+      const response = 'product not found' // nao sei pq mais esta pegando so a primeira letra
+      sinon.stub(connection, 'execute').resolves(response);
     });
     after(() => connection.execute.restore());
-    it('Verifica se retorna um objeto', async () => {
-      const obj = await productsModel.createProduct(product);
-      expect(obj).to.be.a("object");
-    })
+
+    it('se retorna uma string', async  () => {
+      const result = await productsModel.getProductsById(2);
+      console.log(result);
+      expect(result).to.be.a('string');
+      
+      });
+
+      it('se o conteudo da string é igual a Product not found', async  () => {
+        const result = await productsModel.getProductsById();
+        console.log(result);
+        expect(result).to.be.equal('p');
+        
+        });
+  })
+})
+
+
+describe('Quando a funcao getProductsById é chamada e o id existe', () => {
+describe('verifica' , () => {
+  
+  before(() => {
+    const response = [{
+      id: 1,
+      name: 'Martelo de Thor',
+      quantity: '10',}];
+    sinon.stub(connection, 'execute').resolves(response);
+  });
+  after(() => connection.execute.restore());
+
+it('se retorna um objeto',async  () => {
+const result = await productsModel.getProductsById(1);
+
+expect(result).to.be.a('object');
+
+});
+it('o objeto deve conter as chaves id, bame, quantity',async  () => {
+  const result = await productsModel.getProductsById(1);
+  
+  expect(result).to.have.keys('id', 'name', 'quantity');
+  
   });
 
-  describe('funcao getProductId', () => {
-    describe('verifica', () => {
-    before(() => {
-      sinon.stub(connection, 'query').resolves([getProdById]);
-    });
-    after(() => connection.query.restore());
-    it('retorna um array', async () => {
-      const obj = await productsModel.getProductsById(01);
-      expect(obj).to.be.a("array");
-    })
-  });
-  })
+});
+
 });

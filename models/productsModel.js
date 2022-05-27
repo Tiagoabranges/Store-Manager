@@ -12,7 +12,7 @@ const getProductsById = async (id) => {
   return product;
 };
 
-// função que ira criar um novo produto se comunicando com o bd req 4
+// 4 - Crie um endpoint para o cadastro de produtos
 const createProduct = async (name, quantity) => {
   console.log('cheguei model');
   const [{ insertId }] = await connection
@@ -37,6 +37,7 @@ const getProductsByName = async (name) => {
   console.log([[product]]);
   return product[0];
 };
+
 const updateProducts = async (name, quantity, id) => {
   await connection.execute(`
   UPDATE products
@@ -52,15 +53,16 @@ const deleteProducts = async (id) => {
   return {};
 };
 
+// funcao para req 11
 const updateProductById = async (productId, quantity, operator) => {
-  const getQuantity = 'SELECT quantity FROM StoreManager.products WHERE id = ?';
-  const query = 'UPDATE StoreManager.products SET quantity = ? WHERE id = ?';
-
-  const [[actualQuantity]] = await connection.execute(getQuantity, [productId]);
-  const newQuantity = calculadora(actualQuantity.quantity, quantity, operator);
-  if (newQuantity <= 0) return 'fail';
-  await connection.execute(query, [newQuantity, productId]);
+  const [[currentQuantity]] = await connection
+  .execute('SELECT quantity FROM StoreManager.products WHERE id = ?', [productId]);
+  const quantityNew = calculadora(currentQuantity.quantity, quantity, operator);
+  if (quantityNew <= 0) return 'fail';
+  await connection
+  .execute('UPDATE StoreManager.products SET quantity = ? WHERE id = ?', [quantityNew, productId]);
 };
+
 module.exports = {
   updateProductById,
   deleteProducts,

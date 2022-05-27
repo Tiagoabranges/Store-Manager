@@ -1,5 +1,6 @@
 const express = require('express');
 const products = require('../controllers/productsController');
+const errorMiddleware = require('../middlewares/errorModdle');
 const productsValidation = require('../middlewares/productsValidation');// req 3
 
 const router = express.Router();
@@ -10,4 +11,5 @@ router.post('/', productsValidation, products.createProduct); // req 4
 router.put('/:id', productsValidation, products.updateProducts); // req 5
 router.delete('/:id', products.deleteProducts); // req 6
 
+router.use(errorMiddleware);
 module.exports = router;
