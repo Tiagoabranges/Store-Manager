@@ -64,7 +64,7 @@ async function deleteProducts(req, res) {
     const { id } = req.params;
     const { code, message } = await products.deleteProducts(id);
     if (message) return res.status(code).json({ message });
-    return res.status(code);
+    return res.status(code).end();
   } catch (error) {
     console.log(error);
     return res.status(500);
