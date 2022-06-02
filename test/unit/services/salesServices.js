@@ -27,7 +27,7 @@ describe('Test Sale Service', () => {
       sinon.stub(salesModel, 'getSalesById').resolves([sales]);
     });
     after(() => salesModel.getSalesById.restore());
-    it('verifica o retorno', async () => {
+    it('verifica o retorno da funçaõ', async () => {
    
     })
   })
