@@ -17,7 +17,7 @@ const getSales = async (_req, res) => {
 const getSalesById = async (req, res) => {
   try {
       const { id } = req.params;
-      // console.log(req);
+       console.log(req);
       const { code, sale, message } = await sales.getSalesById(id);
 
       if (!sale) return res.status(code).json({ message });
@@ -30,6 +30,7 @@ const getSalesById = async (req, res) => {
 
 // req 7
 const createSale = async (req, res, next) => {
+  console.log('cheguei create sale');
   try {
     const arrayOfParams = req.body;
 

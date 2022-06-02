@@ -1,12 +1,15 @@
 const calculadora = require('../calc');
 const connection = require('./connection');
 
-const getProducts = async () => { // conectando com o bd para trazer a lista dos produtos req 2
+// req 2conectando com o bd para trazer a lista dos produtos
+const getProducts = async () => {  
   const [arrayProducts] = await connection.execute('SELECT * FROM products');
   return arrayProducts;
 };
- // funcao para retornar produtos fazendo uma conexao com o banco de dados req 2
+
+ // req 2 funcao para retornar produtos fazendo uma conexao com o banco de dados 
 const getProductsById = async (id) => {
+  console.log('model');
   const [product] = await connection
   .execute('SELECT * FROM products WHERE id = ?', [id]);
   return product;
@@ -38,6 +41,7 @@ const getProductsByName = async (name) => {
   return product[0];
 };
 
+// 5 - Crie um endpoint para atualizar um produto
 const updateProducts = async (name, quantity, id) => {
   await connection.execute(`
   UPDATE products
@@ -48,12 +52,13 @@ const updateProducts = async (name, quantity, id) => {
   return { id, name, quantity };
 };
 
+// req 6 funcao que conectara com o banco de dados para deletar um produto pelo id
 const deleteProducts = async (id) => {
   await connection.execute('DELETE products FROM products WHERE id = ?', [id]);
   return {};
 };
 
-// funcao para req 11
+// funcao para req 11, sera usada no controler
 const updateProductById = async (productId, quantity, operator) => {
   const [[currentQuantity]] = await connection
   .execute('SELECT quantity FROM StoreManager.products WHERE id = ?', [productId]);

@@ -137,3 +137,90 @@ it('o objeto deve conter as chaves id, bame, quantity',async  () => {
 });
 
 });
+
+
+describe('testes para a funcao deleteProduct productModel', () => {
+  describe('Quando não encontra nenhum produto', () => {
+    const resolve = [[]]
+    const payloadProduct = {};
+    
+    beforeEach(() => {
+      sinon.stub(connection, "execute").resolves(resolve);
+    });
+  
+    afterEach(() => {
+      connection.execute.restore();
+    });
+    
+    it("retorna um array vazio", async () => {
+      const response = await productsModel.deleteProducts(1);
+      expect(response).to.deep.equal(payloadProduct);
+    });
+  })
+
+  describe('Quando encontra o produto', () => {
+    const resolve = [{affectedRows: 1}]
+    const payloadProduct = {};
+    
+    beforeEach(() => {
+      sinon.stub(connection, "execute").resolves(resolve);
+    });
+  
+    afterEach(() => {
+      connection.execute.restore();
+    });
+
+    it("retorna um array com valores", async () => {
+      const response = await productsModel.deleteProducts(1);
+      expect(response).to.deep.equal(payloadProduct);
+    });
+  })
+});
+
+
+describe("testes para a funcao updateProduct productModel", () => {
+  const payloadProduct = {
+    id: 1,
+    name: "prego",
+    quantity: 2,
+  };
+  const resolve = [];
+
+  beforeEach(() => {
+    sinon.stub(connection, "execute").resolves(resolve);
+  });
+
+  afterEach(() => {
+    connection.execute.restore();
+  });
+
+  it("retorna um objeto com id, name, quantity", async () => {
+    const response = await productsModel.updateProducts("prego", 2, 1);
+    expect(response).to.deep.equal(payloadProduct);
+  });
+});
+
+
+describe("testes para a funcao createProduct productsModel", () => {
+  const payloadProduct = {
+    id: 1,
+    name: "prego",
+    quantity: 2,
+  };
+  const resolve = [{insertId: 1}];
+
+  beforeEach(() => {
+    sinon.stub(connection, "execute").resolves(resolve);
+  });
+
+  afterEach(() => {
+    connection.execute.restore();
+  });
+
+  it("retorna um objeto com id, name, quantity", async () => {
+    const response = await productsModel.createProduct("prego", 2);
+    expect(response).to.deep.equal(payloadProduct);
+  });
+});
+
+

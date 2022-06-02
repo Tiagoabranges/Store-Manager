@@ -4,6 +4,7 @@ const sinon = require('sinon');
 const salesModel = require('../../../models/salesModel');
 const connection = require('../../../models/connection');
 
+
 const salesGetAll = {
   salesId: 01,
   data: '2019-01-01',
@@ -42,10 +43,58 @@ describe('Test Sale Model', () => {
   })
 });
 
-describe('Funcao createPorducts', () => {
-  before(() => {
-    sinon.stub(connection, 'execute').resolves([{ insertId: 01 }]);
-  });
-  after(() => connection.execute.restore());
- 
-});
+
+
+describe('Testa a função createSale da camada de models da "sales"', () => {
+  describe('quando ocorre com sucesso', () => {
+    const result = [{
+    }]
+
+    const sales = [
+      {
+        "productId": 1,
+        "quantity": 2
+      },
+      {
+        "productId": 2,
+        "quantity": 5
+      }
+    ]
+
+    beforeEach(() => {
+      sinon.stub(connection, 'execute').resolves(result)
+    })
+
+    afterEach(() =>  connection.execute.restore())
+
+    it('deve retornar um objeto', async () => {
+      const response = await salesModel.createSale(sales)
+      expect({response}).to.be.a('object')
+    })
+
+  })
+})
+
+describe('Testa a função updateSale da camada de models da "sales"', () => {
+  describe('quando ocorre com sucesso', () => {
+    const id = 1
+
+    const sales = [{
+        "productId": 1,
+        "quantity": 6
+      }]
+    
+    beforeEach(() => {
+      sinon.stub(connection, 'execute').resolves()
+    })
+
+    afterEach(() => {
+      connection.execute.restore()
+    })
+
+    it('deve retornar um objeto com as informações atualizada', async () => {
+      const response = await salesModel.updateSale(id, sales)
+      expect(response).to.be.a('undefined')
+    })
+  })
+})

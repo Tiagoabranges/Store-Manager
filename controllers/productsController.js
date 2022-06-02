@@ -11,9 +11,10 @@ const getProducts = async (_req, res) => {
   }
 };
 
-// req 2
+// req 2 cria endpoint para retornar produto pelo id
 const getProductsById = async (req, res) => {
   try {
+    console.log('controler');
     const { id } = req.params;
 
     const { code, message, product } = await products.getProductsById(id);

@@ -22,6 +22,7 @@ const getSales = async () => {
     `);
     return sales;
 };
+
  // funcao para retornar vendas pelo id fazendo uma conexao com o banco de dados req 2
 const getSalesById = async (id) => {
   const [salesId] = await connection.execute(
@@ -39,7 +40,7 @@ const getSalesById = async (id) => {
 
 // Crie um endpoint para cadastrar vendas req 7
 const createSale = async (arrayOfParams) => {
-  const date = getCurrentDate();
+  const date = getCurrentDate(); // funcao que retorna data e minutos 
   const [response] = await connection
   .execute('INSERT INTO StoreManager.sales (date) VALUES (?)', [date]);
 
