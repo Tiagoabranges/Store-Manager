@@ -125,6 +125,6 @@ describe("testes para a funcao deleteProducts productService", () => {
 
    it("retorna um objeto com id, name, quantity", async () => {
     const response = await productService.deleteProducts(1);
-    expect(response).to.deep.equal({ code: 404 , "message": "Product not found"});
+    expect(response).to.deep.equal({ code: 204 });
   }); 
 });
