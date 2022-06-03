@@ -105,14 +105,10 @@ console.log(result);
     }); */
   });
 });
-/* 
+
 
 describe("testes para a funcao deleteProducts productService", () => {
-  const payloadProduct = [{
-    id: 1,
-    name: "pregoo",
-    quantity: 2,
-  }];
+  const payloadProduct = { code: 204 }
   const resolve = [{ id: 1, name: 'pregoo', quantity: 2 }];
 
   beforeEach(() => {
@@ -125,7 +121,7 @@ describe("testes para a funcao deleteProducts productService", () => {
 
    it("retorna um objeto com id, name, quantity", async () => {
     const response = await productService.deleteProducts(1);
-    expect(response).to.deep.equal({ code: 204 });
+    expect(response).to.deep.equal(payloadProduct);
   }); 
 });
- */
+ 
