@@ -6,7 +6,7 @@ const sinon = require('sinon');
 const connection = require('../../../models/connection');
 const productsModel = require('../../../models/productsModel');
 
-describe(('Quando a função getProducts do models for chamada'), () => {
+describe((' função getProducts do models f'), () => {
   describe('e não tiverem produtos a serem listados', () => {
     before(async () => {
       const result = [[]];
@@ -87,7 +87,7 @@ describe(('Quando a função getProducts do models for chamada'), () => {
 describe('Quando a funcao getProductsById é chamada e nao existe id', () => {
   describe('verifica', () => {
     before(() => {
-      const response = 'product not found' // nao sei pq mais esta pegando so a primeira letra
+      const response = 'product not found' 
       sinon.stub(connection, 'execute').resolves(response);
     });
     after(() => connection.execute.restore());
@@ -107,7 +107,6 @@ describe('Quando a funcao getProductsById é chamada e nao existe id', () => {
         });
   })
 })
-
 
 describe('Quando a funcao getProductsById é chamada e o id existe', () => {
 describe('verifica' , () => {
@@ -131,13 +130,9 @@ it('o objeto deve conter as chaves id, bame, quantity',async  () => {
   const result = await productsModel.getProductsById(1);
   
   expect(result).to.have.keys('id', 'name', 'quantity');
-  
-  });
-
+     });
+   });
 });
-
-});
-
 
 describe('testes para a funcao deleteProduct productModel', () => {
   describe('Quando não encontra nenhum produto', () => {
@@ -177,7 +172,6 @@ describe('testes para a funcao deleteProduct productModel', () => {
   })
 });
 
-
 describe("testes para a funcao updateProduct productModel", () => {
   const payloadProduct = {
     id: 1,
@@ -199,7 +193,6 @@ describe("testes para a funcao updateProduct productModel", () => {
     expect(response).to.deep.equal(payloadProduct);
   });
 });
-
 
 describe("testes para a funcao createProduct productsModel", () => {
   const payloadProduct = {

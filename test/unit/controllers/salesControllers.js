@@ -39,7 +39,6 @@ describe(' funcao getSales saleController', () => {
   });
 })
 
-
 describe(' funcao getSalesById saleController', () => {
   describe('quando existem produtos no banco de dados', async () => {
     const response = {};

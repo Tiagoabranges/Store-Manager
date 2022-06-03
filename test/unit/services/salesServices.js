@@ -40,10 +40,10 @@ describe('Test Sale Service', () => {
       saleModel.getSalesById.restore();
     });
   
-  /*   it("retorna um objeto com id, name, quantity", async () => {
+    it("retorna um objeto com id, name, quantity", async () => {
       const response = await saleService.getSalesById(1);
-      expect(response).to.deep.equal(payloadProduct);
-    }); */
+      expect(response).to.be.a('object');
+    }); 
   });
   
 

@@ -4,24 +4,23 @@ const sinon = require('sinon');
 const salesModel = require('../../../models/salesModel');
 const connection = require('../../../models/connection');
 
-
-const salesGetAll = {
+const sales = {
   salesId: 01,
   data: '2019-01-01',
   productId: 03,
   quantity: 50,
 }
 
-const salesGetById = {
+const salesId = {
   salesId: 01,
   productId: 03,
   quantity: 50,
 }
 
 describe('Test Sale Model', () => {
-  describe('GET', () => {
+  describe('Rota GET', () => {
     before(() => {
-      sinon.stub(connection, 'execute').resolves([[salesGetAll]]);
+      sinon.stub(connection, 'execute').resolves([[sales]]);
     });
     after(() => connection.execute.restore());
 
@@ -31,9 +30,9 @@ describe('Test Sale Model', () => {
     })
   })
 
-  describe('Get By Id', () => {
+  describe('Rota GetById', () => {
     before(() => {
-      sinon.stub(connection, 'execute').resolves([salesGetById]);
+      sinon.stub(connection, 'execute').resolves([salesId]);
     });
     after(() => connection.execute.restore());
     it('verifica o retorno', async () => {
@@ -43,10 +42,8 @@ describe('Test Sale Model', () => {
   })
 });
 
-
-
-describe('Testa a função createSale da camada de models da "sales"', () => {
-  describe('quando ocorre com sucesso', () => {
+describe('Testa a função createSale ', () => {
+  describe('no sucesso', () => {
     const result = [{
     }]
 
@@ -75,8 +72,8 @@ describe('Testa a função createSale da camada de models da "sales"', () => {
   })
 })
 
-describe('Testa a função updateSale da camada de models da "sales"', () => {
-  describe('quando ocorre com sucesso', () => {
+describe('Testa a função updateSale ', () => {
+  describe('na falha', () => {
     const id = 1
 
     const sales = [{
@@ -92,7 +89,7 @@ describe('Testa a função updateSale da camada de models da "sales"', () => {
       connection.execute.restore()
     })
 
-    it('deve retornar um objeto com as informações atualizada', async () => {
+    it('deve retornar undefined', async () => {
       const response = await salesModel.updateSale(id, sales)
       expect(response).to.be.a('undefined')
     })

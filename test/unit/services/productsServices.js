@@ -123,8 +123,8 @@ describe("testes para a funcao deleteProducts productService", () => {
     productModel.deleteProducts.restore();
   });
 
-  it("retorna um objeto com id, name, quantity", async () => {
+   it("retorna um objeto com id, name, quantity", async () => {
     const response = await productService.deleteProducts(1);
-    expect(response).to.deep.equal({ code: 204 });
-  });
+    expect(response).to.deep.equal({ code: 404 , "message": "Product not found"});
+  }); 
 });
