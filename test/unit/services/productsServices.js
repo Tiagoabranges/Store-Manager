@@ -105,7 +105,7 @@ console.log(result);
     }); */
   });
 });
-
+/* 
 
 describe("testes para a funcao deleteProducts productService", () => {
   const payloadProduct = [{
@@ -128,3 +128,4 @@ describe("testes para a funcao deleteProducts productService", () => {
     expect(response).to.deep.equal({ code: 204 });
   }); 
 });
+ */
