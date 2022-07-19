@@ -13,3 +13,9 @@ A API a ser construída trata-se de um sistema de gerenciamento de vendas, onde 
    - Eslint
    - javascript
    - Mysql
+
+## vizualizar
+- para vizualizar o projeto você podera utilizar algumas ferramentas, como: postman ou insumnia ou outra de sua preferencia.
+- git clone git@github.com:T-abran/Store-Manager.git
+- cd Store-Manager
+- npm run dev
