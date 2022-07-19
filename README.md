@@ -4,7 +4,7 @@ A API a ser construída trata-se de um sistema de gerenciamento de vendas, onde 
 ## Desenvolvimento
  - Desenvolvido por <a href="https://www.linkedin.com/in/tiagoabranges/" target="_blank">Tiago Abranges</a>.
  - Email:
-   - marcus.tiagoabranges@gmail.com
+   - tiagoabranges@gmail.com
    - Linkedin: <a href="https://www.linkedin.com/in/tiagoabranges/" target="_blank">tiagoabranges</a>
  - Tecnologia e Ferramentas:
    - NodeJs
