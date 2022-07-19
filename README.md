@@ -15,7 +15,12 @@ A API a ser construída trata-se de um sistema de gerenciamento de vendas, onde 
    - Mysql
 
 ## Vizualizar
-- Para vizualizar o projeto você podera utilizar algumas ferramentas, como: postman ou insomnia ou outra de sua preferencia.
-- git clone git@github.com:T-abran/Store-Manager.git
-- cd Store-Manager
-- npm run dev
+- Para vizualizar o projeto você podera utilizar algumas ferramentas como: postman, insomnia ou outra de sua preferencia.
+ 
+ - Clone o repositório:
+    - ``` git clone git@github.com:T-abran/Store-Manager.git ```
+ - Entre no repositório: 
+    - ``` cd Store-Manager ```
+ - Inicia o projeto:
+    - ``` npm run dev ```
+
